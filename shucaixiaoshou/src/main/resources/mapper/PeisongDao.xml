@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PeisongDao">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.peisong_name as peisongName
+        ,a.peisong_phone as peisongPhone
+        ,a.peisong_photo as peisongPhoto
+        ,a.sex_types as sexTypes
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.PeisongView" >
+        SELECT
+        <include refid="Base_Column_List" />
+
+--         级联表的字段
+
+        FROM peisong  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.peisongName != '' and params.peisongName != null and params.peisongName != 'null' ">
+                and a.peisong_name like CONCAT('%',#{params.peisongName},'%')
+            </if>
+            <if test=" params.peisongPhone != '' and params.peisongPhone != null and params.peisongPhone != 'null' ">
+                and a.peisong_phone like CONCAT('%',#{params.peisongPhone},'%')
+            </if>
+            <if test="params.sexTypes != null and params.sexTypes != ''">
+                and a.sex_types = #{params.sexTypes}
+            </if>
+
+        </where>
+
+        order by a.${params.orderBy} desc 
+    </select>
+
+</mapper>

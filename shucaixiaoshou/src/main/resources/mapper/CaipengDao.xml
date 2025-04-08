@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CaipengDao">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.caipeng_name as caipengName
+        ,a.caipeng_photo as caipengPhoto
+        ,a.caipeng_address as caipengAddress
+        ,a.caipeng_kaifang as caipengKaifang
+        ,a.caipeng_content as caipengContent
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.CaipengView" >
+        SELECT
+        <include refid="Base_Column_List" />
+
+--         级联表的字段
+
+        FROM caipeng  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.caipengName != '' and params.caipengName != null and params.caipengName != 'null' ">
+                and a.caipeng_name like CONCAT('%',#{params.caipengName},'%')
+            </if>
+            <if test=" params.caipengAddress != '' and params.caipengAddress != null and params.caipengAddress != 'null' ">
+                and a.caipeng_address like CONCAT('%',#{params.caipengAddress},'%')
+            </if>
+            <if test=" params.caipengKaifang != '' and params.caipengKaifang != null and params.caipengKaifang != 'null' ">
+                and a.caipeng_kaifang like CONCAT('%',#{params.caipengKaifang},'%')
+            </if>
+            <if test=" params.caipengContent != '' and params.caipengContent != null and params.caipengContent != 'null' ">
+                and a.caipeng_content like CONCAT('%',#{params.caipengContent},'%')
+            </if>
+
+        </where>
+
+        order by a.${params.orderBy} desc 
+    </select>
+
+</mapper>

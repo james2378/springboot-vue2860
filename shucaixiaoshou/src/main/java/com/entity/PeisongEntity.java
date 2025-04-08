@@ -1,0 +1,201 @@
+package com.entity;
+
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.lang.reflect.InvocationTargetException;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.beanutils.BeanUtils;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.enums.FieldFill;
+import com.baomidou.mybatisplus.enums.IdType;
+
+/**
+ * 配送人员
+ *
+ * @author 
+ * @email
+ */
+@TableName("peisong")
+public class PeisongEntity<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
+	public PeisongEntity() {
+
+	}
+
+	public PeisongEntity(T t) {
+		try {
+			BeanUtils.copyProperties(this, t);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+    /**
+     * 主键
+     */
+    @TableId(type = IdType.AUTO)
+    @TableField(value = "id")
+
+    private Integer id;
+
+
+    /**
+     * 配送人员姓名
+     */
+    @TableField(value = "peisong_name")
+
+    private String peisongName;
+
+
+    /**
+     * 配送人员手机号
+     */
+    @TableField(value = "peisong_phone")
+
+    private String peisongPhone;
+
+
+    /**
+     * 配送人员头像
+     */
+    @TableField(value = "peisong_photo")
+
+    private String peisongPhoto;
+
+
+    /**
+     * 性别
+     */
+    @TableField(value = "sex_types")
+
+    private Integer sexTypes;
+
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
+
+    private Date createTime;
+
+
+    /**
+	 * 设置：主键
+	 */
+    public Integer getId() {
+        return id;
+    }
+
+
+    /**
+	 * 获取：主键
+	 */
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    /**
+	 * 设置：配送人员姓名
+	 */
+    public String getPeisongName() {
+        return peisongName;
+    }
+
+
+    /**
+	 * 获取：配送人员姓名
+	 */
+
+    public void setPeisongName(String peisongName) {
+        this.peisongName = peisongName;
+    }
+    /**
+	 * 设置：配送人员手机号
+	 */
+    public String getPeisongPhone() {
+        return peisongPhone;
+    }
+
+
+    /**
+	 * 获取：配送人员手机号
+	 */
+
+    public void setPeisongPhone(String peisongPhone) {
+        this.peisongPhone = peisongPhone;
+    }
+    /**
+	 * 设置：配送人员头像
+	 */
+    public String getPeisongPhoto() {
+        return peisongPhoto;
+    }
+
+
+    /**
+	 * 获取：配送人员头像
+	 */
+
+    public void setPeisongPhoto(String peisongPhoto) {
+        this.peisongPhoto = peisongPhoto;
+    }
+    /**
+	 * 设置：性别
+	 */
+    public Integer getSexTypes() {
+        return sexTypes;
+    }
+
+
+    /**
+	 * 获取：性别
+	 */
+
+    public void setSexTypes(Integer sexTypes) {
+        this.sexTypes = sexTypes;
+    }
+    /**
+	 * 设置：创建时间
+	 */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+
+    /**
+	 * 获取：创建时间
+	 */
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Peisong{" +
+            "id=" + id +
+            ", peisongName=" + peisongName +
+            ", peisongPhone=" + peisongPhone +
+            ", peisongPhoto=" + peisongPhoto +
+            ", sexTypes=" + sexTypes +
+            ", createTime=" + createTime +
+        "}";
+    }
+}
